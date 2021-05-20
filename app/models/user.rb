@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/.freeze
   KANJI_REGEX    = /\A[ぁ-んァ-ン一-龥]/.freeze
-  KANA_REGEX     = /\A[ｧ-ﾝﾞﾟ]+\z/.freeze
+  KANA_REGEX     = /\A[ァ-ヶー－]+\z/.freeze
 
   validates :password,        format: { with: PASSWORD_REGEX, message: "半角英数字混合かつ６文字以上入力"}
   validates :nickname,        presence: true, length: { maximum: 40}
