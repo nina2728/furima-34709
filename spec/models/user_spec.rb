@@ -20,30 +20,88 @@ RSpec.describe User, type: :model do
       it 'password,password_confirmationが英語のみでは登録できない' do
         @user.password = 'aaaaaa'
         @user.password_confirmation = 'aaaaaa'
-        expect(@user.errors.full_messages).to include("")
-      end
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
       end
       it 'password,password_confirmationが数字のみでは登録できない' do
+        @user.password = '111111'
+        @user.password_confirmation = '111111'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+      it 'password,password_confirmationに期待しない文字が入ると登録できない' do
+        @user.password = '$%&あああ'
+        @user.password_confirmation = '$%&あああ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
       end
       it 'nicknameが空では登録できない' do
+        @user.nickname = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Nickname can't be blank")
       end
       it 'emailが空では登録できない' do
+        @user.email = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email can't be blank")
+      end
+      it 'emailに@が含まれていないと登録できない' do
+        @user.email = '123.com'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
       end
       it 'passwordが空では登録できない' do
+        @user.password = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password can't be blank", "Password is invalid", "Password confirmation doesn't match Password")
       end
       it 'password_confirmationが空では登録できない' do
+        @user.password_confirmation = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
       it 'passwordとpassword_confirmationが不一致だと登録できない' do
+        @user.password = 'aaa111'
+        @user.password_confirmation = 'bbb222'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
       it 'lastname_kanjiが空では登録できない' do
+        @user.lastname_kanji = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Lastname kanji can't be blank")
       end
       it 'firstname_kanjiが空では登録できない' do
+        @user.firstname_kanji = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Firstname kanji can't be blank")
+      end
+      it 'lastname_kanji,firstname_kanjiに期待しない文字が入ると登録できない' do
+        @user.lastname_kanji = Gimei.name.last.romaji
+        @user.firstname_kanji = Gimei.name.first.romaji
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Lastname kanji is invalid", "Firstname kanji is invalid")
       end
       it 'lastname_kanaが空では登録できない' do
+        @user.lastname_kana = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Lastname kana can't be blank")
       end
       it 'firstname_kanaが空では登録できない' do
+        @user.firstname_kana = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Firstname kana can't be blank")
+      end
+      it 'lastname_kana,firstname_kanaに期待しない文字が入ると登録できない' do
+        @user.lastname_kana = Gimei.name.last.kanji
+        @user.firstname_kana = Gimei.name.first.romaji
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Lastname kana is invalid", "Firstname kana is invalid")
       end
       it 'date_of_birthが空では登録できない' do
+        @user.date_of_birth = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Date of birth can't be blank")
       end
     end
   end

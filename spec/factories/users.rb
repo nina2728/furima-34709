@@ -1,13 +1,17 @@
 FactoryBot.define do
+  Faker::Config.locale = :ja
   factory :user do
-    nickname              {Faker::Name.name(number: 2)}
+    transient do
+      person { Gimei.name }
+    end
+    nickname              {Faker::Name.name}
     email                 {Faker::Internet.free_email}
-    password              {Faker::Internet.password(min_length: 6, min_alpha: 1, min_numric: 1)}
+    password              {Faker::Lorem.characters(number: 6, min_alpha: 1, min_numeric: 1)}
     password_confirmation {password}
-    lastname_kanji        { "山田" }
-    firstname_kanji       { "太郎" }
-    lastname_kana         { "ヤマダ" }
-    firstname_kana        { "タロウ" }
-    date_of_birth         {Faker::Date.indate_period}
+    lastname_kanji        {person.last.kanji}
+    firstname_kanji       {person.first.kanji}
+    lastname_kana         {person.last.katakana}
+    firstname_kana        {person.first.katakana}
+    date_of_birth         {Faker::Date.in_date_period}
   end
 end
