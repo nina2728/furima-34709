@@ -17,6 +17,12 @@ RSpec.describe User, type: :model do
       end
     end
     context '新規登録できない時' do
+      it 'passwordが６文字以上でないと登録できないこと' do
+        @user.password = 'aa111'
+        @user.password_confirmation = 'aa111'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+      end
       it 'password,password_confirmationが英語のみでは登録できない' do
         @user.password = 'aaaaaa'
         @user.password_confirmation = 'aaaaaa'
@@ -49,6 +55,13 @@ RSpec.describe User, type: :model do
         @user.email = '123.com'
         @user.valid?
         expect(@user.errors.full_messages).to include("Email is invalid")
+      end
+      it 'emailが重複していると登録できない' do
+        @user.save
+        another_user = FactoryBot.build(:user)
+        another_user.email = @user.email
+        another_user.valid?
+        expect(another_user.errors.full_messages).to include("Email has already been taken")
       end
       it 'passwordが空では登録できない' do
         @user.password = ''
