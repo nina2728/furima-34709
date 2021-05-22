@@ -9,10 +9,12 @@ class User < ApplicationRecord
   KANA_REGEX     = /\A[ァ-ヶー－]+\z/.freeze
 
   validates :password,        format: { with: PASSWORD_REGEX }
-  validates :nickname,        presence: true, length: { maximum: 40}
-  validates :lastname_kanji,  presence: true, format: { with: KANJI_REGEX }
-  validates :firstname_kanji, presence: true, format: { with: KANJI_REGEX }
-  validates :lastname_kana,   presence: true, format: { with: KANA_REGEX }
-  validates :firstname_kana,  presence: true, format: { with: KANA_REGEX }
-  validates :date_of_birth,   presence: true
+  with_options presence: true do
+    validates :nickname,        length: { maximum: 40}
+    validates :lastname_kanji,  format: { with: KANJI_REGEX }
+    validates :firstname_kanji, format: { with: KANJI_REGEX }
+    validates :lastname_kana,   format: { with: KANA_REGEX }
+    validates :firstname_kana,  format: { with: KANA_REGEX }
+    validates :date_of_birth
+  end
 end
