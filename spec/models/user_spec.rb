@@ -89,11 +89,15 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Firstname kanji can't be blank")
       end
-      it 'lastname_kanji,firstname_kanjiに期待しない文字が入ると登録できない' do
+      it 'lastname_kanjiに期待しない文字が入ると登録できない' do
         @user.lastname_kanji = Gimei.name.last.romaji
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Lastname kanji is invalid")
+      end
+      it 'firstname_kanjiに期待しない文字が入ると登録できない' do
         @user.firstname_kanji = Gimei.name.first.romaji
         @user.valid?
-        expect(@user.errors.full_messages).to include("Lastname kanji is invalid", "Firstname kanji is invalid")
+        expect(@user.errors.full_messages).to include("Firstname kanji is invalid")
       end
       it 'lastname_kanaが空では登録できない' do
         @user.lastname_kana = ''
@@ -105,11 +109,15 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Firstname kana can't be blank")
       end
-      it 'lastname_kana,firstname_kanaに期待しない文字が入ると登録できない' do
+      it 'lastname_kanaに期待しない文字が入ると登録できない' do
         @user.lastname_kana = Gimei.name.last.kanji
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Lastname kana is invalid")
+      end
+      it 'firstname_kanaに期待しない文字が入ると登録できない' do
         @user.firstname_kana = Gimei.name.first.romaji
         @user.valid?
-        expect(@user.errors.full_messages).to include("Lastname kana is invalid", "Firstname kana is invalid")
+        expect(@user.errors.full_messages).to include("Firstname kana is invalid")
       end
       it 'date_of_birthが空では登録できない' do
         @user.date_of_birth = ''
