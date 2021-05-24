@@ -14,6 +14,7 @@ class Item < ApplicationRecord
     validates :name
     validates :description
     validates :price
+    validates :image
     with_options numericality: { order_than: 1 } do
       validates :category_id
       validates :status_id
