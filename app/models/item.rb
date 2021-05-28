@@ -16,11 +16,11 @@ class Item < ApplicationRecord
     validates :image
   end
   with_options numericality: { other_than: 1 } do
-    validates :category_id
-    validates :status_id
-    validates :delivery_id
-    validates :prefecture_id
-    validates :shipping_id
+    validates :category_id,   numericality: { less_than_or_equal_to: 11 }
+    validates :status_id,     numericality: { less_than_or_equal_to: 7 }
+    validates :delivery_id,   numericality: { less_than_or_equal_to: 3 }
+    validates :prefecture_id, numericality: { less_than_or_equal_to: 48 }
+    validates :shipping_id,   numericality: { less_than_or_equal_to: 4 }
   end
-  validates :price,         numericality: { only_integer: true, greater_than: 300, less_than: 9_999_999 }
+  validates :price, numericality: { only_integer: true, greater_than: 300, less_than: 9_999_999 }
 end

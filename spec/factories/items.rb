@@ -4,10 +4,10 @@ FactoryBot.define do
 
     name          { Faker::Games::Pokemon.name }
     description   { Faker::Lorem.sentences }
-    category_id   { Faker::Number.within(range: 2..4) }
-    status_id     { Faker::Number.within(range: 2..4) }
-    delivery_id   { Faker::Number.within(range: 2..4) }
-    prefecture_id { Faker::Number.within(range: 2..4) }
+    category_id   { Faker::Number.within(range: 2..11) }
+    status_id     { Faker::Number.within(range: 2..7) }
+    delivery_id   { Faker::Number.within(range: 2..3) }
+    prefecture_id { Faker::Number.within(range: 2..48) }
     shipping_id   { Faker::Number.within(range: 2..4) }
     price         { Faker::Number.within(range: 300..9_999_999) }
 

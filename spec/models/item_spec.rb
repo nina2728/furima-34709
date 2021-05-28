@@ -73,17 +73,17 @@ RSpec.describe Item, type: :model do
       it '価格が半角英数混合では登録できない' do
         @item.price = Faker::Lorem.characters(number: 6, min_alpha: 1, min_numeric: 1)
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
       it '価格が半角英語だけでは登録できない' do
         @item.price = Faker::Lorem.characters(number: 4, min_alpha: 4)
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
       it '価格が全角文字では登録できない' do
         @item.price = '１２３４５６７８９'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
       it '紐づくユーザーが存在しないと保存できない' do
         @item.user = nil
