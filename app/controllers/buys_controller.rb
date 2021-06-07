@@ -1,8 +1,8 @@
 class BuysController < ApplicationController
   
-  #before_action :authenticate_user!, only: [:index, :create]
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :item_info, only: [:index, :create]
-  #before_action :item_authenticate, only: [:index, :create]
+  before_action :item_unmatch, only: [:index, :create]
   
   def index
     @buy_receiver = BuyReceiver.new
@@ -27,9 +27,9 @@ class BuysController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-  def item_authenticate
-    unless @item.user == current_user
+  def item_unmatch
+    if @item.user == current_user
       redirect_to root_path
-    end
+    end 
   end
 end
