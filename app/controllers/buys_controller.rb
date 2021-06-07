@@ -1,4 +1,9 @@
 class BuysController < ApplicationController
+  
+  #before_action :authenticate_user!, only: [:index, :create]
+  before_action :item_info, only: [:index, :create]
+  #before_action :item_authenticate, only: [:index, :create]
+  
   def index
     @buy_receiver = BuyReceiver.new
   end
@@ -15,6 +20,16 @@ class BuysController < ApplicationController
 
   private
   def buy_receiver_params
-    params.require(:buy_receiver).permit(:item_id, :postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :buy_id).merge(:user_id current_user.id)
+    params.require(:buy_receiver).permit(:item_id, :postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :buy_id).merge(user_id: current_user.id)
+  end
+
+  def item_info
+    @item = Item.find(params[:item_id])
+  end
+
+  def item_authenticate
+    unless @item.user == current_user
+      redirect_to root_path
+    end
   end
 end
