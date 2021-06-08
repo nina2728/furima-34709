@@ -10,7 +10,7 @@ class BuyReceiver
     validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
     validates :municipality, format: { with: /\A[ぁ-んァ-ン一-龥]/ }
     validates :address
-    validates :phone_number, numericality: { only_integer: true, less_than: 11 }
+    validates :phone_number, numericality: { only_integer: true, maxlength: "11" }
   end
 
   def save

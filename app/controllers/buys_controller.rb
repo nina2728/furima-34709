@@ -10,6 +10,7 @@ class BuysController < ApplicationController
 
   def create
     @buy_receiver = BuyReceiver.new(buy_receiver_params)
+    binding.pry
     if @buy_receiver.valid?
       @buy_receiver.save
       redirect_to root_path
@@ -20,7 +21,7 @@ class BuysController < ApplicationController
 
   private
   def buy_receiver_params
-    params.require(:buy_receiver).permit(:item_id, :postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :buy_id).merge(user_id: current_user.id)
+    params.require(:buy_receiver).permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :buy_id).merge(user_id: current_user.id, item_id: [:item_id])
   end
 
   def item_info
