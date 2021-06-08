@@ -21,7 +21,7 @@ class BuysController < ApplicationController
 
   private
   def buy_receiver_params
-    params.require(:buy_receiver).permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :buy_id).merge(user_id: current_user.id, item_id: [:item_id])
+    params.require(:buy_receiver).permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :buy_id).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 
   def item_info
