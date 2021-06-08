@@ -10,7 +10,6 @@ class BuysController < ApplicationController
 
   def create
     @buy_receiver = BuyReceiver.new(buy_receiver_params)
-    binding.pry
     if @buy_receiver.valid?
       @buy_receiver.save
       redirect_to root_path
