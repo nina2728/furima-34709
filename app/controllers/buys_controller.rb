@@ -1,10 +1,9 @@
 class BuysController < ApplicationController
-  
   before_action :authenticate_user!, only: [:index, :create]
   before_action :item_info, only: [:index, :create]
   before_action :item_unmatch, only: [:index, :create]
   before_action :item_sould, only: [:index, :create]
-  
+
   def index
     @buy_receiver = BuyReceiver.new
   end
@@ -23,7 +22,9 @@ class BuysController < ApplicationController
   private
 
   def buy_receiver_params
-    params.require(:buy_receiver).permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :buy_id).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    params.require(:buy_receiver).permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :buy_id).merge(
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
+    )
   end
 
   def item_info
@@ -31,13 +32,11 @@ class BuysController < ApplicationController
   end
 
   def item_unmatch
-    if @item.user == current_user
-      redirect_to root_path
-    end 
+    redirect_to root_path if @item.user == current_user
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: buy_receiver_params[:token],
@@ -46,8 +45,6 @@ class BuysController < ApplicationController
   end
 
   def item_sould
-    if @item.buy.present?
-      redirect_to root_path
-    end
+    redirect_to root_path if @item.buy.present?
   end
 end
