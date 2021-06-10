@@ -3,6 +3,7 @@ class BuysController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
   before_action :item_info, only: [:index, :create]
   before_action :item_unmatch, only: [:index, :create]
+  before_action :item_sould, only: [:index, :create]
   
   def index
     @buy_receiver = BuyReceiver.new
@@ -42,5 +43,11 @@ class BuysController < ApplicationController
       card: buy_receiver_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def item_sould
+    if @item.buy.present?
+      redirect_to root_path
+    end
   end
 end
