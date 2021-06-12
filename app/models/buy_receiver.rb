@@ -8,7 +8,7 @@ class BuyReceiver
     validates :token
     validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/ }
     validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
-    validates :municipality, format: { with: /\A[ぁ-んァ-ン一-龥]/ }
+    validates :municipality, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ }
     validates :address
     validates :phone_number, numericality: { only_integer: true }, length: { maximum: 11 }
   end
