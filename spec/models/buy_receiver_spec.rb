@@ -36,7 +36,7 @@ RSpec.describe BuyReceiver, type: :model do
         expect(@buy_receiver.errors.full_messages).to include("Postal code is invalid")
       end
       it '都道府県を選択しなければ登録できない' do
-        @buy_receiver.prefecture_id = "1"
+        @buy_receiver.prefecture_id = 1
         @buy_receiver.valid?
         expect(@buy_receiver.errors.full_messages).to include("Prefecture can't be blank")
       end
