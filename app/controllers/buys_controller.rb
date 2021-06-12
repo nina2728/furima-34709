@@ -1,8 +1,8 @@
 class BuysController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :create]
-  before_action :item_info, only: [:index, :create]
-  before_action :item_unmatch, only: [:index, :create]
-  before_action :item_sould, only: [:index, :create]
+  before_action :authenticate_user!
+  before_action :item_info
+  before_action :item_unmatch
+  before_action :item_sould
 
   def index
     @buy_receiver = BuyReceiver.new
