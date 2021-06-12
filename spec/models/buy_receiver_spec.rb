@@ -15,7 +15,7 @@ RSpec.describe BuyReceiver, type: :model do
       end
       it '建物名が空でも登録できる' do
         @buy_receiver.building_name = ""
-        expect(@buy_receiver.errors.full_messages).to be_valid
+        expect(@buy_receiver).to be_valid
       end
     end
 
