@@ -22,5 +22,5 @@ class Item < ApplicationRecord
     validates :prefecture_id, numericality: { less_than_or_equal_to: 48 }
     validates :shipping_id,   numericality: { less_than_or_equal_to: 4 }
   end
-  validates :price, numericality: { only_integer: true, greater_than: 299, less_than: 9_999_999 }
+  validates :price, numericality: { only_integer: true, greater_than: 299, less_than: 10000000 }
 end
